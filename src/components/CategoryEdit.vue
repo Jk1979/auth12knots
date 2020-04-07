@@ -37,6 +37,8 @@
   </div>
 </template>
 <script>
+/* eslint-disable */
+
 import {required, minValue} from 'vuelidate/lib/validators'
 
 export default {
@@ -100,7 +102,7 @@ export default {
               title: this.title,
               limit: this.limit
           });
-        } catch (e) { }
+        } catch (e) { console.log(e); }
        
       },
       async deleteCategory() {
@@ -112,7 +114,7 @@ export default {
           this.$message('Category has been deleted');
           this.$v.$reset();
           this.$emit('deleted',this.current);
-        } catch (e) { }
+        } catch (e) { console.log(e); }
       }
     },
 

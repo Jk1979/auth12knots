@@ -1,43 +1,30 @@
 <template>
     <div>
-        <div class="page-title">
-            <h3>Booking history</h3>
-        </div>
-
-        <div class="history-chart">
-            <canvas></canvas>
-        </div>
-
-        <section>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Price</th>
-                        <th>Date</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Open</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1212</td>
-                        <td>12.12.32</td>
-                        <td>name</td>
-                        <td>
-                            <span class="white-text badge red">Expense</span>
-                        </td>
-                        <td>
-                            <button class="btn-small btn">
-                                <i class="material-icons">open_in_new</i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <Loader v-if="loading" />
+        <BookingsHistory v-else :bookings="bookings"/>
     </div>
 </template>
+<script>
+import BookingsHistory from '@/components/BookingHistory'
+
+export default {
+    name: 'history',
+    components: { BookingsHistory},
+    data: () => ({
+        bookings: [],
+        categories: [],
+        loading: true
+    }),
+    async mounted(){
+    this.bookings = await this.$store.dispatch('fetchBookings');
+    this.categories = await this.$store.dispatch('fetchCategories');
+    this.bookings = this.bookings.map(it => {
+        it.category = this.categories.filter(ct => ct.id === it.category);
+        if(it.category) it.category = it.category[0];
+        return it;
+    })
+    this.loading = false;
+       //console.log(this.bookings); 
+    }
+}
+</script>

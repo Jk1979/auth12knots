@@ -9,6 +9,19 @@ export default {
         commit('setError',e);
         throw e;
       }
+    },
+    async fetchBookings({commit,dispatch}) {
+      try {
+        const uid = await dispatch('getUid');
+        const bks = (await firebase.database().ref(`/users/${uid}/bookings`).once('value')).val() || {};
+        let bookings = [];
+        
+        bookings = Object.keys(bks).map(key => ({...bks[key], id:key}));
+        return bookings;
+      }catch(e) {
+        commit('setError',e);
+        throw e;
+      }
     }
   }
 }

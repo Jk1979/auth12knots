@@ -23,7 +23,8 @@ export default {
                 { title: 'Bill', url: '/', exact: true},
                 { title: 'History', url: '/history'},
                 { title: 'New booking', url: '/addbooking'},
-                { title: 'Categories', url: '/categories'}
+                { title: 'Categories', url: '/categories'},
+                { title: 'Statistic', url: '/statistic'}
             ]
         })
 }

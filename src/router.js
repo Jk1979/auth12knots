@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+
 
 Vue.use(Router)
 
@@ -55,6 +55,12 @@ export default new Router({
       name: 'detail',
       meta: {layout: 'main'},
       component: () => import( './views/Detail.vue')
+    },
+    {
+      path: '/statistic',
+      name: 'statistic',
+      meta: {layout: 'main'},
+      component: () => import( './views/Statistic.vue')
     }
   ]
 })

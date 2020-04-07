@@ -94,7 +94,7 @@ export default {
             this.amount = 1;
             this.description = '';
             
-            } catch (e) { }
+            } catch (e) { console.log(e); }
        
       }
     }
