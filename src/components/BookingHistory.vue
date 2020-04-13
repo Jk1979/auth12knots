@@ -1,12 +1,6 @@
 <template>
   <div>
-        <div class="page-title">
-            <h3>Booking history</h3>
-        </div>
-
-        <div class="history-chart">
-            <canvas></canvas>
-        </div>
+       
 
         <section>
             <table>
@@ -14,6 +8,7 @@
                     <tr>
                         <th>#</th>
                         <th>Price</th>
+                        <th>Title</th>
                         <th>Date</th>
                         <th>Category</th>
                         <th>Open</th>
@@ -23,11 +18,12 @@
                 <tbody>
                     <tr v-for="book in bookings" :key="book.id">
                         <td>{{book.id}}</td>
-                        <td>{{book.amount}}</td>
+                        <td>{{book.amount|currency('EUR')}}</td>
+                        <td>{{book.description}}</td>
                         <td>{{book.date|date}}</td>
                         <td>{{book.category.title}}</td>
                         <td>
-                            <button class="btn-small btn">
+                            <button class="btn-small btn" @click="$router.push('/detail/'+ book.id)" v-tooltip="book.description">
                                 <i class="material-icons">open_in_new</i>
                             </button>
                         </td>

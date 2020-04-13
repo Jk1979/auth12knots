@@ -22,6 +22,17 @@ export default {
         commit('setError',e);
         throw e;
       }
+    },
+    async fetchBookingById({commit,dispatch},id) {
+      try {
+        const uid = await dispatch('getUid');
+        const book = (await firebase.database().ref(`/users/${uid}/bookings`).child(id).once('value')).val() || {};
+        
+        return {...book, id};
+      }catch(e) {
+        commit('setError',e);
+        throw e;
+      }
     }
   }
 }
