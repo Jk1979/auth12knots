@@ -7,7 +7,7 @@ const locales = {
   "en-US": en,
 };
 export default function localizeFilter(key) {
+  
   const locale = store.getters.info.locale || "en-US";
- 
   return locales[locale][key] || `[${key}]`;
 }

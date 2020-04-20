@@ -21,12 +21,11 @@ export default {
         const uid = await dispatch("getUid");
         const updateData = { ...this.getters.info, ...toUpdate };
 
-        console.log({ name: updateData.name, bill: updateData.bill });
         const res = await firebase
           .database()
           .ref(`/users/${uid}/info`)
-          .update({ name: updateData.name, bill: updateData.bill });
-        console.log(res);
+          .update(updateData);
+       
         commit("setInfo", updateData);
       } catch (e) {
         commit("setError", e);

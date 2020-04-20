@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>{{ "ProfileTitle" | localize }}</h3>
+      <h3>{{ "ProfileTitle"|localize }}</h3>
     </div>
 
     <form class="form" @submit.prevent="handleSubmit">
@@ -37,9 +37,20 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { required } from "vuelidate/lib/validators";
+import localizeFilter from "../filters/localize.filter"
 
 export default {
   name: "Profile",
+  metaInfo() {
+    return {
+      title: this.$title('meta_title'),
+      titleTemplate: '%s - Yay!',
+      htmlAttrs: {
+        lang: 'en',
+        amp: true
+      }
+    }
+  },
   data: () => ({
     name: "",
     isEnLocale: true,
@@ -47,7 +58,7 @@ export default {
   mounted() {
     console.log(this.info.locale);
     this.name = this.info.name;
-    this.isEnLocale = this.info.locale === "en-Us";
+    this.isEnLocale = this.info.locale === "en-US";
     setTimeout(() => {
       M.updateTextFields();
     }, 0);
@@ -66,9 +77,10 @@ export default {
         return;
       }
       try {
-        await this.updateInfo({
+        // await this.updateInfo({
+        await this.$store.dispatch('updateInfo',{
           name: this.name,
-          locale: this.isEnLocale ? "en-Us" : "ru-RU",
+          locale: this.isEnLocale ? "en-US" : "ru-RU",
         });
       } catch (e) {
         this.$store.commit("setError", e);

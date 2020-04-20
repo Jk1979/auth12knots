@@ -24,7 +24,8 @@ export default {
                 { title: 'History', url: '/history'},
                 { title: 'New booking', url: '/addbooking'},
                 { title: 'Categories', url: '/categories'},
-                { title: 'Statistic', url: '/statistic'}
+                { title: 'Statistic', url: '/statistic'},
+                { title: 'Profile', url: '/profile'}
             ]
         })
 }
