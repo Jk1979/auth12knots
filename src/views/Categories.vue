@@ -43,7 +43,7 @@ export default {
             c.title = category.title;
             c.limit = category.limit;
             return c;
-          };
+          }
           
         });
         this.updateCount++;
