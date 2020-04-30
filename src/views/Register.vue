@@ -24,12 +24,26 @@
                     must be at least {{$v.password.$params.minLength.min}} charachters</small>
             </div>
             <div class="input-field">
+                <input id="password_confirmation" type="password" class="validate"
+                    :class="{ invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.email.minLength) }"
+                    v-model.trim="password_confirmation">
+                <label for="password">Password confirmation</label>
+                <small class="helper-text invalid" v-if="$v.password_confirmation.$dirty && !$v.password_confirmation.required">Password must not
+                    be empty</small>
+                <small class="helper-text invalid" v-else-if="$v.password_confirmation.$dirty && !$v.password_confirmation.minLength">Password
+                    must be at least {{$v.password_confirmation.$params.minLength.min}} charachters</small>
+            </div>
+            <div class="input-field">
                 <input id="name" type="text" class="validate"
                     v-model.trim="name"
                     :class="{invalid: ($v.name.$dirty && !$v.name.required)}"
                 >
                 <label for="name">Name</label>
                 <small class="helper-text invalid" v-if="$v.name.$dirty && !$v.name.required">Name field is required</small>
+            </div>
+            <div class="input-field">
+                <input id="surname" type="text" v-model.trim="surname">
+                <label for="name">Surname</label>
             </div>
             <p>
                 <label>
@@ -68,8 +82,10 @@
         name: 'register',
         data: () => ({
             name: '',
+            surname: '',
             email: '',
             password: '',
+            password_confirmation: '',
             agree: false
         }),
         validations: {
@@ -85,6 +101,10 @@
                 required,
                 minLength: minLength(6)
             },
+            password_confirmation: {
+                required,
+                minLength: minLength(6)
+            },
         },
         methods: {
             async submitHandler() {
@@ -93,13 +113,17 @@
                     this.$v.$touch()
                     return;
                 }
-                const formData = {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password
-                }
+                const user = new URLSearchParams();
+                
+                user.append('name', this.name);
+                user.append('surname', this.surname);
+                user.append('email', this.email);
+                user.append('password', this.password);
+                user.append('password_confirmation', this.password_confirmation);
+                
                 try {
-                    await this.$store.dispatch('register',formData)
+                    const regData = await this.$store.dispatch('register',user)
+                    console.log(regData);
                     this.$router.push('/')
                 } catch(e) { console.log(e); }
             }

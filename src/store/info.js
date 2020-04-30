@@ -1,4 +1,5 @@
-import firebase from "firebase/app";
+import axios from 'axios'
+
 export default {
   state: {
     info: {},
@@ -17,35 +18,45 @@ export default {
   },
   actions: {
     async updateInfo({ dispatch, commit }, toUpdate) {
-      try {
-        const uid = await dispatch("getUid");
-        const updateData = { ...this.getters.info, ...toUpdate };
+      // try {
+      //   const uid = await dispatch("getUid");
+      //   const updateData = { ...this.getters.info, ...toUpdate };
 
-        const res = await firebase
-          .database()
-          .ref(`/users/${uid}/info`)
-          .update(updateData);
+      //   const res = await firebase
+      //     .database()
+      //     .ref(`/users/${uid}/info`)
+      //     .update(updateData);
        
-        commit("setInfo", updateData);
-      } catch (e) {
-        commit("setError", e);
-        throw e;
-      }
+      //   commit("setInfo", updateData);
+      // } catch (e) {
+      //   commit("setError", e);
+      //   throw e;
+      // }
     },
-    async fetchInfo({ dispatch, commit }) {
-      try {
-        const uid = await dispatch("getUid");
-        const info = (
-          await firebase
-            .database()
-            .ref(`/users/${uid}/info`)
-            .once("value")
-        ).val();
-        commit("setInfo", info);
-      } catch (e) {
-        commit("setError", e);
-        throw e;
-      }
+    fetchInfo({ dispatch, commit }) {
+      axios.get('http://12knots_october.com/api/v1/getinfo/').then(res => {
+        if(res.data) {
+          commit("setInfo",  res.data );
+        }
+        else { console.log(res); }
+      }).catch(err => {
+        console.log(err)
+      });
+      
+      
+      // try {
+      //   const uid = await dispatch("getUid");
+      //   const info = (
+      //     await firebase
+      //       .database()
+      //       .ref(`/users/${uid}/info`)
+      //       .once("value")
+      //   ).val();
+      //   commit("setInfo", info);
+      // } catch (e) {
+      //   commit("setError", e);
+      //   throw e;
+      // }
     },
     async fetchCur({ dispatch, commit }) {
       const api = "https://api.exchangeratesapi.io/latest?symbols=USD,RUB";

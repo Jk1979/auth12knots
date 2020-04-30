@@ -30,7 +30,8 @@
     name: 'home',
     data: () => ({
       currency: null,
-      loading: true
+      loading: true,
+      user: {}
     }),
     computed : {
       bill() { return this.$store.getters.info.bill;  },
@@ -49,8 +50,9 @@
          
        }
       
+      //  this.user = await this.$store.dispatch('getUser');
        this.loading = false;
-      //  console.log(Object.keys(this.currency).length)
+      
       
     },
     methods: {

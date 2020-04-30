@@ -65,22 +65,21 @@ export default {
         password: { required, minLength: minLength(6)},
     },
     methods: {
-        async submitHandler() {
+        submitHandler() {
             if(this.$v.$invalid) {
                  this.$v.$touch()
                  return
             }
-            const formData = {
-                email: this.email,
-                password: this.password
-            }
-            try {
-                await this.$store.dispatch('login',formData)
-                
-                this.$router.push('/')
-            } catch (e) {
-                // this.$store.commit('setError',e);
-            }
+            const user = new URLSearchParams();
+            user.append('login', this.email);
+            user.append('password', this.password);
+
+            this.$store.dispatch('login',user).then((res)=> {
+                console.log(res);
+                this.$router.push('/');
+            }).catch(err => {
+                this.$message(messages['auth/user-not-found'])
+            });
         }
     },
     mounted() {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import  firebase from 'firebase/app'
+import store from './store'
+
 
 
 Vue.use(Router)
@@ -13,7 +14,10 @@ const router = new Router({
       path: '/',
       name: 'home',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/Home.vue')
+      component: () => import( './views/Home.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     },
     {
       path: '/login',
@@ -66,15 +70,37 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next)=>{
-  const currentUser = firebase.auth().currentUser;
-  const needAuth = to.matched.some(record => record.meta.auth)
-  if(needAuth && !currentUser) {
-      next('/login?message=login');
-  } else {
-      next();
+const guard = function(to, from, next) {
+  // check for valid auth token
+  const user = store.state.auth.user;
+  if(user && user.id) {
+    console.log(user)
+    next();
   }
+  else {
+    store.dispatch('getUser').then((res)=> {
+      console.log(res);
+      next();
+    }).catch((err)=> {
+      next('/login?message=login');
+    })
+  }
+  
+};
 
-})
+// router.beforeEach((to, from, next)=>{
+  
+//   const currentUser = localStorage.getItem('user');
+//   console.log(currentUser.id);
+//   // const needAuth = false
+//   // if(needAuth && !currentUser) {
+//   //     next('/login?message=login');
+//   // } else {
+//   // console.log(store.getters.user);
+//   //   next();
+//   // }
+//     next();
+
+// })
 
 export default router;
