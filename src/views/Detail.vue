@@ -36,8 +36,8 @@ export default {
     }),
     async mounted(){
         const booking = await this.$store.dispatch('fetchBookingById',this.$route.params.id);
-        const category = await this.$store.dispatch('fetchCategoryById',booking.category);
-        booking.catTitle = category.title;
+        // const category = await this.$store.dispatch('fetchCategoryById',booking.category);
+        booking.catTitle = 'test title';//category.title;
         this.booking = booking
         this.loading = false;
       

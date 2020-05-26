@@ -28,6 +28,27 @@ export default {
       })
     },
     async fetchBookingById({commit,dispatch},id) {
+      return new Promise((resolve, reject) => {
+        resolve({
+          'id':1,
+          'description':'Regata on Cuba',
+          'amount' : 30000, 
+          'category':1, 
+          'date':'2020-06-22'
+        });
+        // const userid = this.getters.user.id;
+        // if(userid) {
+        //   axios.get('http://12knots_october.com/api/v1/getbookings/'+userid + '/') .then(res => {
+        //     resolve(res.data);
+        //   }).catch(err => {
+        //     commit('setError',err);
+        //     reject(err)
+        //   });
+        // }
+        // else {
+        //   reject('no user')
+        // }
+      })
       // try {
       //   const uid = await dispatch('getUid');
       //   const book = (await firebase.database().ref(`/users/${uid}/bookings`).child(id).once('value')).val() || {};

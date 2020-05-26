@@ -98,7 +98,8 @@ const guard = function(to, from, next) {
     store.dispatch('getUser').then((res)=> {
       next();
     }).catch((err)=> {
-      next('/login?message=login');
+
+      next('/login?message='+err.error);
     })
   }
   
