@@ -124,7 +124,7 @@
                 try {
                     const regData = await this.$store.dispatch('register',user)
                     console.log(regData);
-                    this.$router.push('/')
+                    this.$router.push('/login?message=afterregister')
                 } catch(e) { console.log(e); }
             }
         }

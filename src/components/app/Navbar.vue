@@ -42,7 +42,7 @@ export default {
         dropdown: null
     }),
     computed: {
-        name () { return this.$store.getters.info.name; }
+        name () { return this.$store.getters.user.name || 'Guest'; }
     },
     mounted() {
        

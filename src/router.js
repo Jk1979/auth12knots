@@ -35,37 +35,55 @@ const router = new Router({
       path: '/categories',
       name: 'categories',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/Categories.vue')
+      component: () => import( './views/Categories.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     },
     {
       path: '/profile',
       name: 'profile',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/Profile.vue')
+      component: () => import( './views/Profile.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     },
     {
       path: '/history',
       name: 'history',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/History.vue')
+      component: () => import( './views/History.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     },
     {
       path: '/addbooking',
       name: 'addbooking',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/Addbooking.vue')
+      component: () => import( './views/Addbooking.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     },
     {
       path: '/detail/:id',
       name: 'detail',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/Detail.vue')
+      component: () => import( './views/Detail.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     },
     {
       path: '/statistic',
       name: 'statistic',
       meta: {layout: 'main', auth: true},
-      component: () => import( './views/Statistic.vue')
+      component: () => import( './views/Statistic.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
     }
   ]
 })
@@ -74,12 +92,10 @@ const guard = function(to, from, next) {
   // check for valid auth token
   const user = store.state.auth.user;
   if(user && user.id) {
-    console.log(user)
     next();
   }
   else {
     store.dispatch('getUser').then((res)=> {
-      console.log(res);
       next();
     }).catch((err)=> {
       next('/login?message=login');

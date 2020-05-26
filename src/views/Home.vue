@@ -31,14 +31,9 @@
     data: () => ({
       currency: null,
       loading: true,
-      user: {}
     }),
     computed : {
       bill() { return this.$store.getters.info.bill;  },
-      // currency() { return this.$store.getters.currency; },
-      // loading() {
-      //   return !Object.keys(this.currency).length 
-      // }
     },
     components: {
         HomeBill,HomeCurrency
@@ -50,7 +45,6 @@
          
        }
       
-      //  this.user = await this.$store.dispatch('getUser');
        this.loading = false;
       
       

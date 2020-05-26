@@ -31,6 +31,7 @@ export default {
   }),
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories');
+    
     this.loading = false;
   },
   methods: {
@@ -49,7 +50,6 @@ export default {
         this.updateCount++;
     },
     refreshAfterDelete(id) {
-      console.log(id);
       this.categories = this.categories.filter( c => c.id !== id);
      
     }

@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   actions: {
     async addBooking({commit,dispatch},record) {
@@ -10,17 +12,20 @@ export default {
       // }
     },
     async fetchBookings({commit,dispatch}) {
-      // try {
-      //   const uid = await dispatch('getUid');
-      //   const bks = (await firebase.database().ref(`/users/${uid}/bookings`).once('value')).val() || {};
-      //   let bookings = [];
-        
-      //   bookings = Object.keys(bks).map(key => ({...bks[key], id:key}));
-      //   return bookings;
-      // }catch(e) {
-      //   commit('setError',e);
-      //   throw e;
-      // }
+      return new Promise((resolve, reject) => {
+        const userid = this.getters.user.id;
+        if(userid) {
+          axios.get('http://12knots_october.com/api/v1/getbookings/'+userid + '/') .then(res => {
+            resolve(res.data);
+          }).catch(err => {
+            commit('setError',err);
+            reject(err)
+          });
+        }
+        else {
+          reject('no user')
+        }
+      })
     },
     async fetchBookingById({commit,dispatch},id) {
       // try {

@@ -1,6 +1,22 @@
+import axios from 'axios'
+
 export default {
   actions: {
     async fetchCategories({commit,dispatch}){
+      return new Promise((resolve, reject) => {
+        const userid = this.getters.user.id;
+        if(userid) {
+          axios.get('http://12knots_october.com/api/v1/getcats/'+userid + '/') .then(res => {
+            resolve(res.data);
+          }).catch(err => {
+            commit('setError',err);
+            reject(err)
+          });
+        }
+        else {
+          reject('no user')
+        }
+    })
       // try {
       //   const uid = await dispatch('getUid');
       //   const categories = (await firebase.database().ref(`/users/${uid}/categories`).once('value')).val() || {};

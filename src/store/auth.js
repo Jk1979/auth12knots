@@ -35,37 +35,17 @@ export default {
         })
       })
     },
-    login2({dispatch,commit},user) {
-        axios.post('http://12knots_october.com/api/auth/login/',user).then(res => {
-          if(res.data) {
-            
-            commit('setUser',res.data.user);
-            commit('setToken',res.data.token);
-            if(res.data.token) localStorage.setItem('token', res.data.token)
-          }
-          else { console.log(res); }
-        }).catch(err => {
-          console.log(err)
-        });
-    },
+    
     register({dispatch,commit},user) {
-      try {
-        axios.post('http://12knots_october.com/api/auth/register/',user).then(res => {
-          if(res.data) {
-            console.log(res.data);
-           
-          }
-          else { console.log(res); }
-        }).catch(err => {
-          console.log(err)
-        });
-     
-
-      } catch (e) {
-          console.log(e);
-          commit('setError',e);
-          throw e
-      }
+      return new Promise((resolve, reject) => {
+          axios.post('http://12knots_october.com/api/auth/register/',user).then(res => {
+            resolve(res.data)
+          }).catch(err => {
+            commit('setError',err);
+            localStorage.removeItem('token')
+            reject(err)
+          });
+      })
     },
     getUser({dispatch,commit}){
 
@@ -94,7 +74,8 @@ export default {
     async logout({commit}) {
       // await firebase.auth().signOut()
       localStorage.removeItem('token');
-      // await commit('clearInfo')
+      await commit('setUser',{}) 
+      await commit('setToken','') 
     }
 
   },

@@ -52,12 +52,13 @@ export default {
     }
   },
   data: () => ({
+    user: {},
     name: "",
     isEnLocale: true,
   }),
   mounted() {
-    console.log(this.info.locale);
-    this.name = this.info.name;
+    this.user = this.$store.getters.user;
+    this.name = this.user.name;
     this.isEnLocale = this.info.locale === "en-US";
     setTimeout(() => {
       M.updateTextFields();
