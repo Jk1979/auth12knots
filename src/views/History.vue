@@ -67,7 +67,7 @@ export default {
                                 if(book.category.id === c.id) {
                                     total+= +book.amount
                                 }
-                                console.log(book);
+                               
                                 return total;
                             },0)
                         }),

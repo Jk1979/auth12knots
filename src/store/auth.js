@@ -26,6 +26,7 @@ export default {
           commit('setToken',token);
           localStorage.setItem('token', token);
           axios.defaults.headers.common['Authorization'] = token
+          commit('clearError');
           resolve(res)
         })
         .catch(err => {
