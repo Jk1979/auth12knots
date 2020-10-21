@@ -18,7 +18,7 @@ export default {
     
     login({commit}, user){
       return new Promise((resolve, reject) => {
-        axios({url: 'http://12knots_october.com/api/auth/login/', data: user, method: 'POST' })
+        axios({url: process.env.VUE_APP_API_PATH + 'auth/login/', data: user, method: 'POST' })
         .then(res => {
           const token = res.data.token
           const user = res.data.user
@@ -39,7 +39,7 @@ export default {
     
     register({dispatch,commit},user) {
       return new Promise((resolve, reject) => {
-          axios.post('http://12knots_october.com/api/auth/register/',user).then(res => {
+          axios.post(process.env.VUE_APP_API_PATH + 'auth/register/',user).then(res => {
             resolve(res.data)
           }).catch(err => {
             commit('setError',err);
@@ -57,7 +57,7 @@ export default {
           }
         };
        
-        axios.get('http://12knots_october.com/api/auth/me/',config).then(res => {
+        axios.get(process.env.VUE_APP_API_PATH + 'auth/me/',config).then(res => {
           if(res.data) {
             commit('setUser',res.data.user);
             resolve(res.data)

@@ -6,7 +6,7 @@ export default {
       return new Promise((resolve, reject) => {
         const userid = this.getters.user.id;
         if(userid) {
-          axios.get('http://12knots_october.com/api/v1/getcats/'+userid + '/') .then(res => {
+          axios.get(process.env.VUE_APP_API_PATH + 'v1/getcats/'+userid + '/') .then(res => {
             resolve(res.data);
           }).catch(err => {
             commit('setError',err);

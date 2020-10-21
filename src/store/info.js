@@ -34,7 +34,7 @@ export default {
       // }
     },
     fetchInfo({ dispatch, commit }) {
-      axios.get('http://12knots_october.com/api/v1/getinfo/').then(res => {
+      axios.get(process.env.VUE_APP_API_PATH + 'v1/getinfo/').then(res => {
         if(res.data) {
           commit("setInfo",  res.data );
         }
