@@ -4,6 +4,8 @@ import Vuelidate from "vuelidate";
 import Paginate from "vuejs-paginate";
 import VueMeta from 'vue-meta'
 
+import Axios from 'axios'
+
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -33,6 +35,23 @@ Vue.directive("tooltip", tooltipDirective);
 Vue.component("Loader", Loader);
 Vue.component("Paginate", Paginate);
 
+Vue.prototype.$http = Axios;
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
+}
+
+Vue.prototype.$http.interceptors.response.use((response) => {
+  return response;
+},  function (error) {
+  // Do something with response error
+  if (error.response.status === 401) {
+      console.log('unauthorized, logging out ...');
+     
+  }
+  return Promise.reject(error.response);
+}
+);
 
 let app;
 

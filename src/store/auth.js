@@ -25,7 +25,7 @@ export default {
           commit('setUser',user);
           commit('setToken',token);
           localStorage.setItem('token', token);
-          axios.defaults.headers.common['Authorization'] = token
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
           commit('clearError');
           resolve(res)
         })
@@ -73,6 +73,7 @@ export default {
       
     },
     async logout({commit}) {
+      console.log('logout');
       // await firebase.auth().signOut()
       localStorage.removeItem('token');
       await commit('setUser',{}) 
