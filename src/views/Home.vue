@@ -6,6 +6,9 @@
       <button class="btn waves-effect waves-light btn-small" @click="refresh">
         <i class="material-icons">refresh</i>
       </button>
+      <button class="btn waves-effect waves-light btn-small" @click="refreshToken">
+        <i class="material-icons">refresh token</i>
+      </button>
     </div>
     <Loader v-if="loading"/>
     <div v-else class="row">
@@ -58,7 +61,11 @@
          this.currency = {rates: {...cur.rates, 'EUR':1}, date: cur.date};
        }
        this.loading = false;
-      }
+      },
+      async refreshToken() {
+        let res = await this.$store.dispatch('refresh');
+        console.log(res);
+      },
     }
   }
 </script>

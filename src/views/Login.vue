@@ -75,15 +75,14 @@ export default {
             user.append('password', this.password);
 
             this.$store.dispatch('login',user).then((res)=> {
-                console.log(res);
                 this.$router.push('/');
             }).catch(err => {
+                console.log(err.data.error);
                 this.$message(messages['auth/user-not-found'])
             });
         }
     },
     mounted() {
-        console.log(process.env);
         if(messages[this.$route.query.message]) {
             this.$message(messages[this.$route.query.message])
         }

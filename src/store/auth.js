@@ -68,17 +68,39 @@ export default {
           reject(err);
         });
       });
-      
-     
-      
+
     },
-    async logout({commit}) {
+    async logout({dispatch,commit}) {
       console.log('logout');
       // await firebase.auth().signOut()
       localStorage.removeItem('token');
       await commit('setUser',{}) 
       await commit('setToken','') 
-    }
+    },
+
+    refresh({dispatch,commit}){
+      return new Promise((resolve, reject) => {
+        const data = {
+          token: this.getters.token 
+        }
+        axios({url: process.env.VUE_APP_API_PATH + 'auth/refresh-token/', data, method: 'POST' })
+        .then(res => {
+          // console.log('refresh result', res);
+          const token = res.data.token
+          commit('setToken',token);
+          localStorage.setItem('token', token);
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+          commit('clearError');
+          resolve(res)
+        })
+        .catch(err => {
+          commit('setError',err);
+          localStorage.removeItem('token')
+          commit('setUser',{});
+          reject(err)
+        })
+      })
+    },
 
   },
   getters: {
