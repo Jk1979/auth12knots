@@ -37,7 +37,7 @@
 <script>
 export default {
     data: ()=> ({
-        date: new Date().toLocaleString(),
+        date: new Date(),//.toLocaleString(),
         interval: null,
         dropdown: null
     }),

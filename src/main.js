@@ -46,9 +46,16 @@ Vue.prototype.$http.interceptors.response.use((response) => {
 },  function (error) {
   // Do something with response error
   if (error.response.status === 401) {
-      console.log('unauthorized, logging out ...');
-     
+      console.log('unauthorized, trying to refresh token...');
+      store.dispatch('refresh').then(res => {
+        router.push('/');
+      }).catch(err => {
+        console.log(err);
+        router.push('/login');
+      });
+      // console.log(store.user);
   }
+  
   return Promise.reject(error.response);
 }
 );

@@ -13,9 +13,9 @@ export default {
         }
     },
     watch: {
-        error(fbError) {
-           this.$error(messages[fbError.code] || 'Service temporary unavailable')     
-        }
+        // error(fbError) {
+        //    this.$error(messages[fbError.code] || 'Service temporary unavailable')     
+        // }
     }
 }
 </script>

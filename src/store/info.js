@@ -64,6 +64,7 @@ export default {
         let response = await fetch(api);
         return await response.json();
       } catch (e) {
+        commit('setError',e);
         console.log(e);
       }
     },

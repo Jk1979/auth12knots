@@ -9,18 +9,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    error: null
+    error: null,
+    errors: []
   },
   mutations: {
     setError(state, error) {
       state.error = error;
     },
+    addError(state, error) {
+      state.errors.push(error);
+    },
     clearError(state) {
       state.error = null
+    },
+    clearErrors(state) {
+      state.errors = []
     }
   },
   getters: {
-    error: state => state.error
+    error: state => state.error,
+    errors: state => state.errors
   },
   modules: {
     auth, info, category, booking

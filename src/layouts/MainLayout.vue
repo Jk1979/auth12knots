@@ -51,9 +51,8 @@ export default {
       }
   },
   watch: {
-    
       error(fbError) {
-          this.$error(messages[fbError.code] || 'Service temporary unavailable')     
+          if(fbError) this.$error(messages[fbError.code] || fbError);     
       }
   }
   
