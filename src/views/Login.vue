@@ -77,7 +77,7 @@ export default {
             this.$store.dispatch('login',user).then((res)=> {
                 this.$router.push('/');
             }).catch(err => {
-                console.log(err.data.error);
+                console.log(err);
                 this.$message(messages['auth/user-not-found'])
             });
         }

@@ -45,7 +45,8 @@ Vue.prototype.$http.interceptors.response.use((response) => {
   return response;
 },  function (error) {
   // Do something with response error
-  if (error.response.status === 401) {
+  console.log(error);
+  if (error.response !== 'undefined' && error.response.status === 401) {
       console.log('unauthorized, trying to refresh token...');
       store.dispatch('refresh').then(res => {
         router.push('/');
