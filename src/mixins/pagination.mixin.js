@@ -18,6 +18,9 @@ export default {
     pageHandler(page) {
       this.$router.push(`${this.$route.path}?page=${page}`);
       this.items = this.allItems[page-1] || this.allItems[0]; 
-    }
+    },
+    // pageHandlerNew(page) {
+    //   this.$router.push(`${this.$route.path}?page=${page}`);
+    // }
   }
 }

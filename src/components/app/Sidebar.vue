@@ -20,7 +20,8 @@ export default {
     data: ()=> (
         {
             links: [
-                { title: 'Home', url: '/', exact: true},
+                { title: 'Dashboard', url: '/', exact: true},
+                { title: 'Bookings list', url: '/bookings'},
                 { title: 'History', url: '/history'},
                 { title: 'New booking', url: '/addbooking'},
                 { title: 'Categories', url: '/categories'},

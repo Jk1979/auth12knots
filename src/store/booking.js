@@ -11,6 +11,19 @@ export default {
       //   throw e;
       // }
     },
+    async fetchOrders({commit,dispatch},queryData) {
+      return new Promise((resolve, reject) => {
+        
+          axios.get(process.env.VUE_APP_API_PATH + 'v1/orders/',{params:queryData}) .then(res => {
+            resolve(res.data);
+          }).catch(err => {
+            commit('setError',err);
+            reject(err)
+          });
+      
+        
+      })
+    },
     async fetchBookings({commit,dispatch}) {
       return new Promise((resolve, reject) => {
         const userid = this.getters.user.id;

@@ -84,7 +84,17 @@ const router = new Router({
       beforeEnter: (to, from, next) => {
         guard(to, from, next);
       }
-    }
+    }, 
+    // new routes
+    {
+      path: '/bookings',
+      name: 'bookings',
+      meta: {layout: 'main', auth: true},
+      component: () => import( './views/Bookings.vue'),
+      beforeEnter: (to, from, next) => {
+        guard(to, from, next);
+      }
+    }, 
   ]
 })
 
