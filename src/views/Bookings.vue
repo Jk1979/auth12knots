@@ -23,6 +23,7 @@
 <script>
 import BookingsList from '@/components/BookingsList'
 import paginationMixin from '@/mixins/pagination.mixin.js'
+// import { mapActions } from 'vuex'
 
 
 export default {
@@ -38,6 +39,7 @@ export default {
         },
     }),
     methods: {
+       
        async getBookings(page) {
             this.loading = true;
             // const queryData = new URLSearchParams();
@@ -45,14 +47,16 @@ export default {
             this.queryData.page = page;
             try {
                 this.bookings = await this.$store.dispatch('fetchOrders',this.queryData);
-                console.log(this.bookings);
+                if(typeof this.bookings !== 'undefined') {
+                    this.items = this.bookings.data;
+                    this.pageCount = this.bookings.last_page;
+                    this.loading = false;
+                }
             }
             catch(err) {
                 console.log(err);
             }            
-            this.items = this.bookings.data;
-            this.pageCount = this.bookings.last_page;
-            this.loading = false;
+            
        }, 
        pageHandlerNew(page) {
             // this.loading = true;

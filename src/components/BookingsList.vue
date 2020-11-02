@@ -32,18 +32,18 @@
                         <td>{{book.request_date|date}}</td>
                         <td>{{book.onhold_date|date}}</td>
                         <td>{{book.client.name}}</td>
-                        <td>{{book.operator_id}}</td>
-                        <td>{{book.boat_id}}</td>
-                        <td>{{book.boat_id}}</td>
+                        <td>{{book.operator_name || book.operator_id}}</td>
+                        <td>{{book.boat.model}}</td>
+                        <td>{{book.boat.name}}</td>
                         <td>{{book.checkin|date}}</td>
                         <td>{{book.checkout|date}}</td>
                         <td>{{book.country}}</td>
                         <td>{{book.base}}</td>
                         <td>{{book.price|currency('EUR')}}</td>
                         <td>{{book.status}}</td>
-                        <td>{{book.manager_id}}</td>
+                        <td>{{book.manager_name || book.manager_id}}</td>
                         <td>
-                            <button class="btn-small btn" @click="$router.push('/detail/'+ book.id)" v-tooltip="book.client">
+                            <button class="btn-small btn" @click="$router.push('/detail/'+ book.id)" v-tooltip="book.client.name">
                                 <i class="material-icons">open_in_new</i>
                             </button>
                         </td>
